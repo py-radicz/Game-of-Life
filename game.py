@@ -6,7 +6,7 @@ from pygame.locals import *
 FPS = 10
 WINDOW = 500
 CELLSIZE = 5
-
+PADDING = (WINDOW // CELLSIZE)
 assert WINDOW % CELLSIZE == 0, "win size must be a multiple of cell"
 
 
@@ -16,12 +16,12 @@ class Board():
 
 		pygame.init()
 		pygame.display.set_caption('Game of Life')
-		self.screen = pygame.display.set_mode((WINDOW, WINDOW))
+		self.screen = pygame.display.set_mode((WINDOW + PADDING, WINDOW + PADDING))
 		self.grid = [[0] * (WINDOW // CELLSIZE) for i in range(WINDOW // CELLSIZE)]
 
 	def draw(self):
-		for i, x in enumerate(range(0, WINDOW, CELLSIZE + 1)):
-			for j, y in enumerate(range(0, WINDOW, CELLSIZE + 1)):
+		for i, x in enumerate(range(0, WINDOW + PADDING, CELLSIZE + 1)):
+			for j, y in enumerate(range(0, WINDOW + PADDING, CELLSIZE + 1)):
 
 				if self.grid[i][j] == 0:
 					color = (20, 120, 20)
@@ -31,8 +31,8 @@ class Board():
 				pygame.draw.rect(self.screen, color, Rect((x, y), (CELLSIZE, CELLSIZE)))
 
 	def randomize(self):
-		for i in range(CELLSIZE, (WINDOW // CELLSIZE) - CELLSIZE):
-			for j in range(CELLSIZE, (WINDOW // CELLSIZE) - CELLSIZE):
+		for i in range(1, (WINDOW // CELLSIZE) - 1):
+			for j in range(1, (WINDOW // CELLSIZE) - 1):
 
 				if random.randint(0, 100) < 50:
 					self.grid[i][j] = 1
@@ -40,8 +40,8 @@ class Board():
 	def rules(self):
 		new_grid = [[0] * (WINDOW // CELLSIZE) for i in range(WINDOW // CELLSIZE)]
 
-		for i in range(CELLSIZE - (CELLSIZE - 1), (WINDOW // CELLSIZE) - CELLSIZE * 4):
-			for j in range(CELLSIZE - (CELLSIZE - 1), (WINDOW // CELLSIZE) - CELLSIZE * 4):
+		for i in range(1, (WINDOW // CELLSIZE) - 1):
+			for j in range(1, (WINDOW // CELLSIZE) - 1):
 
 				if self.grid[i][j] == 0:
 
