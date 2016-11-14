@@ -80,8 +80,8 @@ class Board():
 					pygame.quit()
 					sys.exit()
 
-			board.rules()
-			board.draw()
+			self.rules()
+			self.draw()
 			pygame.display.update()
 			fps_clock.tick(FPS)
 
