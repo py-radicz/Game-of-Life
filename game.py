@@ -6,7 +6,7 @@ from pygame.locals import *
 FPS = 10
 WINDOW = 500
 CELLSIZE = 5
-PADDING = (WINDOW // CELLSIZE)
+PADDING = (WINDOW // CELLSIZE) - 1
 assert WINDOW % CELLSIZE == 0, "win size must be a multiple of cell"
 
 
