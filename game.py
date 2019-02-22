@@ -8,12 +8,11 @@ import sys
 class Board:
     def __init__(self, grid_size, cell_size):
         self.FPS = 10
-        self.dead_color = (20, 120, 20)
-        self.alive_color = (255, 255, 255)
+        self.dead_color = (255, 255, 255)
+        self.alive_color = (148, 0, 211)
         self.grid_size = grid_size
         self.cell_size = cell_size
         self.window_size = (self.grid_size * self.cell_size) - 1
-        print(self.window_size)
 
         self.grid = {
             (x * self.cell_size, y * self.cell_size): random.choice(
@@ -26,14 +25,15 @@ class Board:
         pygame.init()
         pygame.display.set_caption("Game of Life")
         self.screen = pygame.display.set_mode((self.window_size, self.window_size))
+        self.screen.fill((255, 255, 255))
 
     def __draw(self):
         for coords, color in self.grid.items():
-            pygame.draw.rect(
-                self.screen,
-                color,
-                Rect(coords, (self.cell_size - 1, self.cell_size - 1)),
-            )
+            x, y = coords
+            radius = self.cell_size // 2
+            x = x + radius
+            y = y + radius
+            pygame.draw.circle(self.screen, color, (x, y), self.cell_size // 2)
 
     def __count_neighbors(self, coords):
         coords = np.array([coords] * 8)
@@ -105,4 +105,4 @@ class Board:
 
 
 if __name__ == "__main__":
-    Board(grid_size=100, cell_size=6).create_life()
+    Board(grid_size=80, cell_size=6).create_life()
